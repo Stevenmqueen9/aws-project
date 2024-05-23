@@ -1,5 +1,5 @@
 <?php
-$hostname="database:3306";
+$hostname="mysql-container";
 $username="root";
 $password="root";
 $database="aws";
