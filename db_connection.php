@@ -1,7 +1,7 @@
 <?php
-$hostname="localhost";
+$hostname="database:3306";
 $username="root";
-$password="";
+$password="root";
 $database="aws";
 
 $conn=new mysqli($hostname,$username,$password,$database);
