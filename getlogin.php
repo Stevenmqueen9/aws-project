@@ -4,28 +4,26 @@ require 'db_connection.php';
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-
-$stmt = $conn->prepare("SELECT id, password FROM aws WHERE email = ?");
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$result = $stmt->get_result();
+$sql = "SELECT * FROM utenti WHERE email='$email'";
+$result = $conn->query($sql);
 
 if ($result->num_rows == 0) {
-    echo '<script>alert("L\'utente non risulta nel DB"); window.location.href = "login.html";</script>';
+    echo "L'username non risulta nel database";
 } else {
-    $user = $result->fetch_assoc();
+    $password = md5($password);
+    $sql = "SELECT * FROM utenti WHERE username = '$username' AND password = '$password'";
+    $result = $conn->query($sql);
 
-    // Verifica la password utilizzando MD5
-    if (md5($password) === $user['password']) {
+    if ($result->num_rows > 0) {
         session_start();
-        $_SESSION['id_utente'] = $user['id'];
+        $_SESSION['id_utente'] = $result->fetch_assoc()['id'];
+
         header('Location: indexlog.php');
         exit(); 
     } else {
-        echo '<script>alert("Credenziali errate"); window.location.href = "login.html";</script>';
+        echo "Le credenziali non sono corrette";
     }
 }
 
-$stmt->close();
 $conn->close();
 ?>
