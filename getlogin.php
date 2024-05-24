@@ -19,7 +19,7 @@ if ($result->num_rows == 0) {
     if (md5($password) === $user['password']) {
         session_start();
         $_SESSION['id_utente'] = $user['id'];
-        header('Location: indexlogUser.php');
+        header('Location: indexlog.php');
         exit(); 
     } else {
         echo '<script>alert("Credenziali errate"); window.location.href = "login.html";</script>';
